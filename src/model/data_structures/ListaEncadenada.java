@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class ListaEncadenada <T extends Comparable<T>> implements Iterable<T>,IListaEncadenada<T>
+public class ListaEncadenada <T extends Comparable<T>> implements IListaEncadenada<T>
 {
 	private int longitud;
 	private Node<T> cabeza = null;
@@ -178,11 +178,27 @@ public class ListaEncadenada <T extends Comparable<T>> implements Iterable<T>,IL
 		}
 		return puntero.darT();
 	}
-
-	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public T darObjetoPorObjeto(T t2)
+	{
+		int cont=0;
+		boolean encontrado=false;
+		Node<T> puntero=cabeza;
+		T retorno=null;
+		
+		while(cont<longitud && !encontrado && puntero!=null)
+		{
+			if(puntero.darT().compareTo(t2)==0)
+			{
+				retorno=puntero.darT();
+				encontrado= true;
+			}
+			puntero=puntero.darSiguiente();
+			cont++;
+		}
+		return retorno;
 	}
+
+	
 	
 }

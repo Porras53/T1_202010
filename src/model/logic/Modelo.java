@@ -71,17 +71,27 @@ public class Modelo {
 	
 	public String darInfoPorID(int idobject)
 	{
-		Comparendo c= (Comparendo) datos.darObjeto(idobject-1);
-		
-		if(c==null)
+		String retorno=null;
+		int cont=0;
+		boolean encontrado= false;
+		while(cont < datos.darLongitud() && !encontrado)
 		{
-			return "No existe información de ese comparendo con ID= "+idobject;
+			Comparendo c= (Comparendo) datos.darObjeto(cont);
+			if(c.getId()==idobject)
+			{
+				retorno="ID ="+c.getId()+" ,Fecha = "+c.getFecha()+" ,Infraccion ="+c.getClasevehi()+" ,Tipo de servicio="+c.getTiposervi() +" ,Localidad="+c.getLocalidad();
+				encontrado= true;
+			}
+			cont++;
 		}
 		
-		else
+		if(retorno==null)
 		{
-			return "ID ="+c.getId()+" ,Fecha = "+c.getFecha()+" ,Infraccion ="+c.getClasevehi()+" ,Tipo de servicio="+c.getTiposervi() +" ,Localidad="+c.getLocalidad();
+			retorno="No existe información acerca del comparendo con ID = "+idobject;
 		}
+		
+		return retorno;
+		
 	}
 	
 	
