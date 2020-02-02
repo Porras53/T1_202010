@@ -21,5 +21,10 @@ public class Node <T extends Comparable<T>>
 		return siguiente;
 	}
 	
+	public T darT()
+	{
+		return t;
+	}
+	
 	
 }

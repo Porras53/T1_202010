@@ -1,7 +1,11 @@
 package model.logic;
 
-import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+import java.io.File;
+
+import com.google.gson.*;
+
+import model.data_structures.*;
+import sun.misc.IOUtils;
 
 /**
  * Definicion del modelo del mundo
@@ -11,62 +15,65 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
+	private IListaEncadenada datos;
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		datos = new ArregloDinamico(7);
+		datos = new ListaEncadenada();
 	}
 	
-	/**
-	 * Constructor del modelo del mundo con capacidad dada
-	 * @param tamano
-	 */
-	public Modelo(int capacidad)
+	
+	public void cargar()
 	{
-		datos = new ArregloDinamico(capacidad);
+		//Definir mejor la entrada para el lector de json
+		String dir= "./data/comparendos_dei_2018.geojson";
+		File archivo= new File("./data/comparendos_dei_2018.geojson");
+		JsonObject gsonObj0= JsonParser.parseString(dir).getAsJsonObject();
+		
+		JsonArray comparendos=gsonObj0.get("features").getAsJsonArray();
+		
+		for(JsonElement obj : comparendos)
+		{
+			JsonObject gsonObj= obj.getAsJsonObject();
+			
+			JsonObject gsonObjpropiedades=gsonObj.get("properties").getAsJsonObject();
+			int objid= gsonObjpropiedades.get("OBJECTID").getAsInt();
+			String fecha= gsonObjpropiedades.get("FECHA_HORA").getAsString();
+			String clasevehiculo=gsonObjpropiedades.get("CLASE_VEHI").getAsString();
+			String tiposervi=gsonObjpropiedades.get("TIPO_SERVI").getAsString();
+			String infraccion=gsonObjpropiedades.get("INFRACCION").getAsString();
+			String desinfraccion=gsonObjpropiedades.get("DES_INFRAC").getAsString();
+			String localidad=gsonObjpropiedades.get("LOCALIDAD").getAsString();
+			
+			JsonObject gsonObjgeometria=gsonObj.get("geometry").getAsJsonObject();
+			
+			JsonArray gsonArrcoordenadas= gsonObjgeometria.get("coordinates").getAsJsonArray();
+			double longitud= gsonArrcoordenadas.get(0).getAsDouble();
+			double latitud= gsonArrcoordenadas.get(1).getAsDouble();
+			
+			datos.insertarFinal((Comparable) new Comparendo(objid, fecha, clasevehiculo, tiposervi, infraccion, desinfraccion, localidad, new Coordenadas(longitud,latitud)));
+			
+		}
+		
+		
+		
 	}
 	
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
 	 * @return numero de elementos presentes en el modelo
 	 */
-	public int darTamano()
+	public IListaEncadenada darListaEncadenada()
 	{
-		return datos.darTamano();
-	}
-
-	/**
-	 * Requerimiento de agregar dato
-	 * @param dato
-	 */
-	public void agregar(String dato)
-	{	
-		datos.agregar(dato);
+		return datos;
 	}
 	
-	/**
-	 * Requerimiento buscar dato
-	 * @param dato Dato a buscar
-	 * @return dato encontrado
-	 */
-	public String buscar(String dato)
-	{
-		return datos.buscar(dato);
-	}
+
+		
 	
-	/**
-	 * Requerimiento eliminar dato
-	 * @param dato Dato a eliminar
-	 * @return dato eliminado
-	 */
-	public String eliminar(String dato)
-	{
-		return datos.eliminar(dato);
-	}
-
-
 }
+
+	

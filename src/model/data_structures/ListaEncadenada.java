@@ -1,6 +1,8 @@
 package model.data_structures;
 
-public class ListaEncadenada <T extends Comparable<T>> 
+import java.util.Iterator;
+
+public class ListaEncadenada <T extends Comparable<T>> implements Iterable<T>,IListaEncadenada<T>
 {
 	private int longitud;
 	private Node<T> cabeza = null;
@@ -9,6 +11,11 @@ public class ListaEncadenada <T extends Comparable<T>>
 	{
 		longitud=0;
 		cabeza=null;
+	}
+	
+	public T darCabeza()
+	{
+		return cabeza.darT();
 	}
 	
 	public int darLongitud()
@@ -23,34 +30,158 @@ public class ListaEncadenada <T extends Comparable<T>>
 	
 	public void insertarComienzo(T t2)
 	{
-		
+		Node<T> nodo = new Node<T>(t2);
+		nodo.cambiarSiguiente(cabeza);
+		cabeza= nodo;
 	}
 	
 	public void insertarFinal(T t2)
 	{
+		Node<T> node= new Node<T>(t2);
+		if(cabeza==null)
+		{
+			cabeza = node;
+		}
 		
+		else
+		{
+			Node<T> puntero = cabeza;
+			while(puntero.darSiguiente()!=null)
+			{
+				puntero = puntero.darSiguiente();
+			}
+			puntero.cambiarSiguiente(node);
+		}
+		longitud++;
 	}
+	
+	
 	public void insertarDespuesDe(int n ,T t2)
 	{
+		Node<T> node= new Node<T>(t2);
+		if(cabeza== null)
+		{
+			cabeza = node;
+		}
+		else
+		{
+			Node<T> puntero = cabeza;
+			int cont=0;
+			while(cont < n && puntero.darSiguiente()!=null)
+			{
+				puntero= puntero.darSiguiente();
+				cont++;
+			}
+			node.cambiarSiguiente(puntero.darSiguiente());
+			puntero.cambiarSiguiente(node);
+		}
+		longitud++;
 		
 	}
 	
-	public void eliminarComienzo(T t2)
+	public void eliminarComienzo()
 	{
+		if(cabeza!=null)
+		{
+			Node<T> primer= cabeza;
+			cabeza= cabeza.darSiguiente();
+			primer.cambiarSiguiente(null);
+			longitud--;
+		}
+	}
+	
+	public void eliminarFinal()
+	{
+		if(cabeza!= null)
+		{
+			if(cabeza.darSiguiente()==null)
+			{
+				cabeza = null;
+			}
+			else
+			{
+				Node<T> puntero= cabeza;
+				while(puntero.darSiguiente().darSiguiente()!=null)
+				{
+					puntero=puntero.darSiguiente();
+				}
+				puntero.cambiarSiguiente(null);
+			}
+			longitud--;
+		}
+	}
+	
+	public void eliminarObjeto(int n)
+	{
+		if(cabeza != null)
+		{
+			if(n==0)
+			{
+				Node<T> primer= cabeza;
+				cabeza= cabeza.darSiguiente();
+				primer.cambiarSiguiente(null);
+				longitud--;
+			}
+			else if(n < longitud)
+			{
+				Node<T> puntero = cabeza;
+				int cont= 0;
+				while(cont < (n-1))
+				{
+					puntero= puntero.darSiguiente();
+					cont++;
+				}
+				Node<T> temp= puntero.darSiguiente();
+				puntero.cambiarSiguiente(temp.darSiguiente());
+				temp.cambiarSiguiente(null);
+				longitud--;
+			}
+		}
 		
 	}
 	
-	public void eliminarFinal(T t2)
+	public T darObjeto(int pos)
 	{
+		if(cabeza==null)
+		{
+			return null;
+		}
+		else
+		{
+			Node<T> puntero= cabeza;
+			int cont=0;
+			while(cont < pos && puntero.darSiguiente()!=null)
+			{
+				puntero = puntero.darSiguiente();
+				cont++;
+			}
+			if(cont != pos)
+			{
+				return null;
+			}
+			else
+			{
+				return (T) puntero.darT();
+				
+			}
 		
-	}
-	public void eliminarObjeto(int n,T t2)
-	{
+		}
 		
 	}
 	
-	public T obtener(int n)
+	public T darUltimo()
 	{
+		Node<T> puntero = cabeza;
+		while(puntero.darSiguiente()!=null)
+		{
+			puntero = puntero.darSiguiente();
+		}
+		return puntero.darT();
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
