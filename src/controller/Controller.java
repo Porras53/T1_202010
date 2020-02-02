@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import model.data_structures.ListaEncadenada;
@@ -30,7 +31,6 @@ public class Controller {
 	{
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
-		String dato = "";
 		String respuesta = "";
 
 		while( !fin ){
@@ -40,7 +40,12 @@ public class Controller {
 			switch(option){
 				case 1:
 				    modelo = new Modelo();
-				    modelo.cargar();
+				try {
+					modelo.cargar();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				    ListaEncadenada datos= (ListaEncadenada) modelo.darListaEncadenada();
 				    view.printMessage("Lista de Comparendos cargado");
 				    view.printMessage("Primer Comparendo = " + datos.darCabeza().toString() + "\n---------");
@@ -49,11 +54,9 @@ public class Controller {
 					break;
 
 				case 2:
-					view.printMessage("--------- \nDar cadena (simple) a ingresar: ");
-					dato = lector.next();
-					//modelo.agregar(dato);
-					view.printMessage("Dato agregado");
-					//view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					view.printMessage("--------- \nDar Object ID del comparendo a consultar: \n---------");
+					int dato = lector.nextInt();
+					view.printMessage("--------- \n"+modelo.darInfoPorID(dato)+"\n---------");						
 					break;
 					
 				case 3: 

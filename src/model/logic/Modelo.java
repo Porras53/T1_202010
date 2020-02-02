@@ -1,8 +1,12 @@
 package model.logic;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 import model.data_structures.*;
 import sun.misc.IOUtils;
@@ -26,12 +30,14 @@ public class Modelo {
 	}
 	
 	
-	public void cargar()
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void cargar() throws FileNotFoundException
 	{
 		//Definir mejor la entrada para el lector de json
-		String dir= "./data/comparendos_dei_2018.geojson";
-		File archivo= new File("./data/comparendos_dei_2018.geojson");
-		JsonObject gsonObj0= JsonParser.parseString(dir).getAsJsonObject();
+		String dir= "./data/comparendos_dei_2018_small.geojson";
+		File archivo= new File(dir);
+		JsonReader reader= new JsonReader( new InputStreamReader(new FileInputStream(archivo)));
+		JsonObject gsonObj0= JsonParser.parseReader(reader).getAsJsonObject();
 		
 		JsonArray comparendos=gsonObj0.get("features").getAsJsonArray();
 		
@@ -54,13 +60,30 @@ public class Modelo {
 			double longitud= gsonArrcoordenadas.get(0).getAsDouble();
 			double latitud= gsonArrcoordenadas.get(1).getAsDouble();
 			
-			datos.insertarFinal((Comparable) new Comparendo(objid, fecha, clasevehiculo, tiposervi, infraccion, desinfraccion, localidad, new Coordenadas(longitud,latitud)));
+			Comparendo agregar=new Comparendo(objid, fecha, clasevehiculo, tiposervi, infraccion, desinfraccion, localidad, new Coordenadas(longitud,latitud));
+			datos.insertarFinal((Comparable) agregar);
 			
 		}
 		
 		
 		
 	}
+	
+	public String darInfoPorID(int idobject)
+	{
+		Comparendo c= (Comparendo) datos.darObjeto(idobject-1);
+		
+		if(c==null)
+		{
+			return "No existe información de ese comparendo con ID= "+idobject;
+		}
+		
+		else
+		{
+			return "ID ="+c.getId()+" ,Fecha = "+c.getFecha()+" ,Infraccion ="+c.getClasevehi()+" ,Tipo de servicio="+c.getTiposervi() +" ,Localidad="+c.getLocalidad();
+		}
+	}
+	
 	
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 

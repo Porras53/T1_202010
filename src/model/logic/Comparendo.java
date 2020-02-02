@@ -1,6 +1,6 @@
 package model.logic;
 
-public class Comparendo {
+public class Comparendo implements Comparable{
 
 	private int id;
 	private String fecha;
@@ -92,6 +92,12 @@ public class Comparendo {
 
 	public void setCoordenadas(Coordenadas coordenadas) {
 		this.coordenadas = coordenadas;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
