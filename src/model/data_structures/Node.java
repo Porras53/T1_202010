@@ -1,11 +1,11 @@
 package model.data_structures;
 
-public class Node <T extends Comparable<T>>
+public class Node <E>
 {
-	private T t;
+	private E t;
 	private Node siguiente;
 	
-	public Node(T t2)
+	public Node(E t2)
 	{
 		t=t2;
 		siguiente=null;
@@ -21,7 +21,7 @@ public class Node <T extends Comparable<T>>
 		return siguiente;
 	}
 	
-	public T darT()
+	public E darT()
 	{
 		return t;
 	}

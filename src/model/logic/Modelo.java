@@ -99,7 +99,7 @@ public class Modelo {
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
 	 * @return numero de elementos presentes en el modelo
 	 */
-	public IListaEncadenada darListaEncadenada()
+	public IListaEncadenada<Comparendo> darListaEncadenada()
 	{
 		return datos;
 	}

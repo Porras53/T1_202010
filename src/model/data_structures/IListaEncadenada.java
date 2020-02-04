@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public interface IListaEncadenada <T extends Comparable<T>>
+public interface IListaEncadenada <T>
 {
 	
 	T darCabeza();
