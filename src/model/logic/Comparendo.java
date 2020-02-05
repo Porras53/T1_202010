@@ -9,9 +9,10 @@ public class Comparendo{
 	private String infraccion;
 	private String desinfraccion;
 	private String localidad;
-	private Coordenadas coordenadas;
+	private double longitud;
+	private double latitud;
 	
-	public Comparendo(int id,String fecha, String clasevehiculo,String tiposervicio,String infraccion,String desinfraccion,String localidad, Coordenadas coordenadas)
+	public Comparendo(int id,String fecha, String clasevehiculo,String tiposervicio,String infraccion,String desinfraccion,String localidad, double longitud,double latitud)
 	{
 		this.id= id;
 		this.fecha=fecha;
@@ -20,14 +21,15 @@ public class Comparendo{
 		this.infraccion=infraccion;
 		this.desinfraccion=desinfraccion;
 		this.localidad=localidad;
-		this.coordenadas=coordenadas;
+		this.longitud=longitud;
+		this.latitud=latitud;
 	}
 
 	@Override
 	public String toString() {
 		return "Comparendo [id=" + id + ", fecha=" + fecha + ", clase de vehiculo=" + clasevehi + ", tipo de servicio=" + tiposervi
 				+ ", infraccion=" + infraccion + ", descripcion de infraccion=" + desinfraccion + ", localidad=" + localidad
-				+ ", coordenadas=" + coordenadas.toString() + "]";
+				+ ", coordenadas=" +"Longitud= "+longitud +", Latitud= "+latitud + "]";
 	}
 
 	public int getId() {
@@ -86,13 +88,7 @@ public class Comparendo{
 		this.localidad = localidad;
 	}
 
-	public Coordenadas getCoordenadas() {
-		return coordenadas;
-	}
 
-	public void setCoordenadas(Coordenadas coordenadas) {
-		this.coordenadas = coordenadas;
-	}
 
 	
 	

@@ -22,4 +22,6 @@ public interface IListaEncadenada <T>
 	public void eliminarObjeto(int n);
 	
 	T darObjeto(int n);
+	
+	T darUltimo();
 }

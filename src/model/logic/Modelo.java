@@ -30,13 +30,13 @@ public class Modelo {
 	}
 	
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+
 	public void cargar() throws FileNotFoundException
 	{
 		//Definir mejor la entrada para el lector de json
 		long inicio = System.currentTimeMillis();
 		long inicio2 = System.nanoTime();
-		String dir= "./data/comparendos_dei_201888.geojson";
+		String dir= "./data/comparendos_dei_2018.geojson";
 		File archivo= new File(dir);
 		JsonReader reader= new JsonReader( new InputStreamReader(new FileInputStream(archivo)));
 		JsonObject gsonObj0= JsonParser.parseReader(reader).getAsJsonObject();
@@ -63,8 +63,8 @@ public class Modelo {
 			double longitud= gsonArrcoordenadas.get(0).getAsDouble();
 			double latitud= gsonArrcoordenadas.get(1).getAsDouble();
 			
-			Comparendo agregar=new Comparendo(objid, fecha, clasevehiculo, tiposervi, infraccion, desinfraccion, localidad, new Coordenadas(longitud,latitud));
-			datos.insertarFinal( agregar);
+			Comparendo agregar=new Comparendo(objid, fecha, clasevehiculo, tiposervi, infraccion, desinfraccion, localidad, longitud,latitud);
+			datos.insertarFinal(agregar);;
 			i++;
 		}
 		long fin2 = System.nanoTime();

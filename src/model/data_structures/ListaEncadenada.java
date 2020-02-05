@@ -5,12 +5,16 @@ import java.util.Iterator;
 public class ListaEncadenada <T> implements IListaEncadenada<T>
 {
 	private int longitud;
+	
 	private Node<T> cabeza = null;
+	
+	private Node<T> ultimo=null;
 	
 	public ListaEncadenada()
 	{
 		longitud=0;
 		cabeza=null;
+		ultimo=null;
 	}
 	
 	public T darCabeza()
@@ -31,8 +35,17 @@ public class ListaEncadenada <T> implements IListaEncadenada<T>
 	public void insertarComienzo(T t2)
 	{
 		Node<T> nodo = new Node<T>(t2);
+		if(esListaVacia())
+		{
+			nodo.cambiarSiguiente(cabeza);
+			cabeza= nodo;
+			ultimo=cabeza;
+		}
+		else{
 		nodo.cambiarSiguiente(cabeza);
 		cabeza= nodo;
+		}
+		longitud++;
 	}
 	
 	public void insertarFinal(T t2)
@@ -41,16 +54,13 @@ public class ListaEncadenada <T> implements IListaEncadenada<T>
 		if(cabeza==null)
 		{
 			cabeza = node;
+			ultimo=cabeza;
 		}
 		
 		else
-		{
-			Node<T> puntero = cabeza;
-			while(puntero.darSiguiente()!=null)
-			{
-				puntero = puntero.darSiguiente();
-			}
-			puntero.cambiarSiguiente(node);
+		{	
+			ultimo.cambiarSiguiente(node);
+			ultimo=node;
 		}
 		longitud++;
 	}
@@ -171,12 +181,7 @@ public class ListaEncadenada <T> implements IListaEncadenada<T>
 	
 	public T darUltimo()
 	{
-		Node<T> puntero = cabeza;
-		while(puntero.darSiguiente()!=null)
-		{
-			puntero = puntero.darSiguiente();
-		}
-		return puntero.darT();
+		return ultimo.darT();
 	}
 	
 	
