@@ -29,7 +29,10 @@ public class Modelo {
 		datos = new ListaEncadenada();
 	}
 	
-	
+	/**
+	 * Carga el archivo .JSON en una lista enlazada.
+	 * @throws FileNotFoundException. Si no encuentra el archivo.
+	 */
 
 	public void cargar() throws FileNotFoundException
 	{
@@ -76,6 +79,11 @@ public class Modelo {
 		
 		
 	}
+	/**
+	 * Busca y retorna un comparendo en la lista con el ID dado.
+	 * @param idobject. ID del comparendo.
+	 * @return Información básica del comparendo.
+	 */
 	
 	public String darInfoPorID(int idobject)
 	{

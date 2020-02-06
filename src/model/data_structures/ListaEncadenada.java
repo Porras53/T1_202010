@@ -4,12 +4,27 @@ import java.util.Iterator;
 
 public class ListaEncadenada <T> implements IListaEncadenada<T>
 {
+	
+	/**
+	 * Cantidad de elementos de la lista
+	 */
 	private int longitud;
 	
+	/**
+	 * Referencia del primer elemento de la lista
+	 */
 	private Node<T> cabeza = null;
 	
+	
+	/**
+	 * Referencia del ultimo elemento de la lista
+	 */
 	private Node<T> ultimo=null;
 	
+	
+	/**
+	 * Metodo Constructro Lista Encadenada
+	 */
 	public ListaEncadenada()
 	{
 		longitud=0;
